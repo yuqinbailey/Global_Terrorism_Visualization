@@ -1,0 +1,49 @@
+body {
+    margin: 0px;
+}
+.sphere{
+    fill:white;
+}
+
+.countries {
+    fill: white;
+    stroke: black;
+}
+
+.countries:hover {
+    fill: red;
+}
+
+/*
+.year_slider{
+    position: absolute;
+    left: 10px;
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: rgb(243, 239, 22);
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  */
+.year_slider{
+    position: absolute;
+    left: 50px;
+    top: 40px
+}
+
+.description{
+    position: absolute;
+    left: 900px;
+    top: 150px
+
+}
+
+.change_view{
+    position: absolute;
+    left: 750px;
+    top: 120px
+}

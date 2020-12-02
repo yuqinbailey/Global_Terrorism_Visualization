@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Global Terrorism</title>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="//d3js.org/topojson.v1.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v3.min.js"></script>
+        <link rel="stylesheet" href='styles.css'> 
+    </head>
+    <body>
+        <h1 align="center">Global Terrorism from 1970 to 2017</h1>
+        
+        <div class="year_slider">
+            <p>Year</p>
+            <input id='slider' type='range' min='1970' max='2017' value='5' step='1'>
+            <input type="text" id="slidertext" value="1970">
+        </div>
+       
+            <p class = "description">
+                Global Terrorism is a serious problem, this map help us to see the
+                change thrend of terrorist attacks in different locations.
+            </p>
+        
+        <button class="change_view">
+            <p>change view</p>
+        </button>
+        <svg width="1000" height="700"></svg>
+        <script src="main.js"></script>
+    </body>
+</html>
