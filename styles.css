@@ -37,7 +37,7 @@ body {
 
 .description{
     position: absolute;
-    left: 900px;
+    left: 930px;
     top: 150px
 
 }
@@ -45,5 +45,21 @@ body {
 .change_view{
     position: absolute;
     left: 750px;
-    top: 120px
+    top: 120px;
+}
+
+
+
+.linechart{
+    position: absolute;
+    left: 900px;
+    top: 80px;
+    
+}
+
+.clear{
+    position: absolute;
+    left: 1390px;
+    top: 650px;
+    
 }

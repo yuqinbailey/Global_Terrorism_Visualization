@@ -9,22 +9,28 @@
     </head>
     <body>
         <h1 align="center">Global Terrorism from 1970 to 2017</h1>
-        
+        <svg class="mappp" width="900" height="1000"></svg>
+        <svg class="linechart" width="580" height="1000"></svg>
         <div class="year_slider">
             <p>Year</p>
             <input id='slider' type='range' min='1970' max='2017' value='5' step='1'>
-            <input type="text" id="slidertext" value="1970">
+            <input type="text" id="slidertext" value="1979">
         </div>
-       
-            <p class = "description">
+        <div class = "description">
+            <p>
                 Global Terrorism is a serious problem, this map help us to see the
                 change thrend of terrorist attacks in different locations.
             </p>
-        
+        </div>
         <button class="change_view">
             <p>change view</p>
         </button>
-        <svg width="1000" height="700"></svg>
+        <button class="clear">
+            <p>clear</p>
+        </button>
+        
+        
+        
         <script src="main.js"></script>
     </body>
 </html>
