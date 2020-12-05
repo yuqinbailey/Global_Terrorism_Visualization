@@ -2,8 +2,6 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-let color = d3.scaleQuantize([1, 10], d3.schemeBlues[9]);
-
 async function draw(year = 1979) {
   const attack_data = await d3.csv("attack.csv");
   let attack = attack_data[Number(year) - 1970];
@@ -13,7 +11,7 @@ async function draw(year = 1979) {
   }
   //console.log(attack);
 
-  let map_data = await d3.json("world_map.json");
+  const map_data = await d3.json("world_map.json");
   const countries = topojson.feature(map_data, map_data.objects.countries);
   //console.log(countries);
 
@@ -33,27 +31,47 @@ async function draw(year = 1979) {
     .attr("class", "sphere")
     .attr("d", pathGenerator({ type: "Sphere" }));
 
-  //console.log(pathGenerator.bounds(countries));
-
-  //console.log(pathGenerator({type:'Sphere'}));
-
-  const color = d3.scaleLinear()
+  const color = d3
+    .scaleLinear()
     .domain([0, 4000])
     .interpolate(() => d3.interpolatePiYG);
 
-  const paths = worldmap.selectAll("path").data(countries.features);
-  paths
+  var attack_num = function (country_name) {
+    if (attack[country_name] === undefined) {
+      return 0;
+    } else {
+      return attack[country_name];
+    }
+  };
+
+  // tooltip
+  var div = d3
+    .select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0.0);
+
+  const paths = worldmap
+    .selectAll("path")
+    .data(countries.features)
     .enter()
     .append("path")
     .attr("class", "countries")
     .attr("d", (d) => pathGenerator(d))
-    .attr("fill", color(4000));
-  //onsole.log(paths);
-  //console.log(paths._enter[0]);
-  //console.log(paths["d"]);
+    .attr("fill", d => color(4000 - attack_num(d.properties.name)))
+    .on("mouseover", function (path, d) {
+      var country_name = d.properties.name;
+      div.transition().duration(200).style("opacity", 0.95);
+      div
+        .html(country_name + "<br/>" + attack_num(country_name))
+        .style("left", event.pageX + "px")
+        .style("top", event.pageY - 28 + "px");
+    })
+    .on("mouseout", function (d) {
+      div.transition().duration(500).style("opacity", 0);
+    });
 }
-draw();
-
+draw(2017);
 
 // The linechart starts from here
 d3.csv("data2.csv").then(function (data) {
