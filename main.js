@@ -2,10 +2,12 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-async function draw(year = 1979) {
+
+//draw map with different color
+async function draw_map1(year = 1979) {
   const attack_data = await d3.csv("attack.csv");
   let attack = attack_data[Number(year) - 1970];
-
+  
   for (c in attack) {
     attack[c] = +attack[c];
   }
@@ -58,7 +60,7 @@ async function draw(year = 1979) {
     .append("path")
     .attr("class", "countries")
     .attr("d", (d) => pathGenerator(d))
-    .attr("fill", d => color(4000 - attack_num(d.properties.name)))
+    .attr("fill", d => color(4000 - attack_num(d.properties.name)*100))
     .on("mouseover", function (path, d) {
       var country_name = d.properties.name;
       div.transition().duration(200).style("opacity", 0.95);
@@ -69,9 +71,117 @@ async function draw(year = 1979) {
     })
     .on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
-    });
+    })
+    /*
+    .on("mousedown", function(d){
+      paths.attr("fill","blue")});*/
 }
-draw(2017);
+
+//draw the map with points
+function draw_map2(){
+
+  const projection = d3.geoMercator()
+  .scale(135)
+  .center([-11, 0])
+  .rotate([0, 0])
+  .translate([width / 2, height / 2]);
+
+const pathGenerator = d3.geoPath().projection(projection);
+
+let worldmap = d3.select("svg.mappp");
+
+worldmap
+  .append("path")
+  .attr("class", "sphere")
+  .attr("d", pathGenerator({ type: "Sphere" }));
+
+
+  d3.json('world_map.json').then((data)=>{
+    //console.log(data.objects);
+    const countries = topojson.feature(data, data.objects.countries);
+    console.log(countries);
+    
+    
+
+    //console.log(pathGenerator.bounds(countries));
+   
+
+    console.log(pathGenerator({type:'Sphere'}));
+    const paths = svg.selectAll('path')
+      .data(countries.features);
+    paths.enter().append('path')
+      .attr("class", "countries")
+      .attr("fill","white")
+      .attr("stroke","black")
+      .attr('d', d => pathGenerator(d))
+      /*
+      .on("mousedown", function(path,d){
+        paths.attr("fill","blue")})
+      
+        .on("mouseover", function (path, d) {
+          var country_name = d.properties.name;
+          div.transition().duration(200).style("opacity", 0.95);
+          div
+            .html(country_name + "<br/>" + attack_num(country_name))
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY - 28 + "px");
+        })
+
+       doucument.onmousemove = function(event){
+          event = event || window.event;
+          var left = event.clientX;
+          var top = event.clientY;
+        
+          paths.style.left = left+"px";
+          paths.style.top = top+"px";
+        };
+      });
+    paths.onmouseup = function(){
+      document.onmousemove = null;
+    }
+*/
+    
+});
+
+  d3.csv("globalterrorism.csv").then(function (data) {
+    data.forEach((d) => {
+      d.year = +d.iyear;
+      d.city = d.city;
+      d.latitude = +d.latitude;
+      d.longitude = +d.longitude;
+      d.attacktype = d.attacktype;
+      d.size = +d.nkill;
+    });
+
+    var div = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0.0);
+
+    worldmap.selectAll(".point")
+      .data(data.filter(d => d.year == 1979))
+      .enter().append('circle')
+      .attr("class","point")
+      .attr("cx",d => projection([d.longitude,d.latitude])[0])
+      .attr("cy",d => projection([d.longitude,d.latitude])[1])
+      .attr("r",3)
+      .attr("fill","red")
+      .on("mouseover", function (point, d) {
+        var city_name = d.city;
+        var casualty = d.size;
+        div.transition().duration(200).style("opacity", 0.95);
+        div
+          .html(city_name + "<br/>" + "casualty: "+casualty)
+          .style("left", event.pageX + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("mouseout", function (d) {
+        div.transition().duration(500).style("opacity", 0);
+      });
+
+  })
+  };
 
 // The linechart starts from here
 d3.csv("data2.csv").then(function (data) {
@@ -116,28 +226,26 @@ d3.csv("data2.csv").then(function (data) {
     );
 });
 
-/*
-  g.append('g')
-      .attr("transform", "translate(0," + 400 + ")")
-      .attr('class', 'x-axis')
-      .call(xAxis);
-  g.append('g')
-      .attr("transform", "translate(0," + 100 + ")")
-      .attr('class', 'y-axis')
-      .call(yAxis);
+function clear_data(){
+  d3.selectAll(".line").remove()
+}
 
-  g.append("path")
-      .datum(d)
-      .data(data.filter(d => d.month == m))
-  
-  svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return x(d.date) })
-        .y(function(d) { return y(d.value) })
-        )
+var falg = true;
 
-*/
+draw_map1();
+
+function change_view(){
+  if(falg){
+    d3.selectAll(".sphere").remove();
+    d3.selectAll(".countries").remove();
+    draw_map2();
+    console.log("change map1 to map 2")
+    falg = false;
+  }else{
+    d3.selectAll(".countries").remove();
+    d3.selectAll(".sphere").remove();
+    d3.selectAll(".point").remove();
+    draw_map1();
+    falg = true;
+  }
+  }

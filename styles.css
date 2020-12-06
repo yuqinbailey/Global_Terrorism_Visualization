@@ -51,7 +51,7 @@ div.tooltip {
   top: 150px;
 }
 
-.change_view {
+#change_view {
   position: absolute;
   left: 750px;
   top: 120px;
@@ -63,8 +63,8 @@ div.tooltip {
   top: 80px;
 }
 
-.clear {
+#clear {
   position: absolute;
   left: 1390px;
-  top: 650px;
+  top: 750px;
 }
