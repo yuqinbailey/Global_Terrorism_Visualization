@@ -2,6 +2,7 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
+var country_array = new Array();
 
 //draw map with different color
 async function draw_map1(year = 1979) {
@@ -53,6 +54,9 @@ async function draw_map1(year = 1979) {
     .attr("class", "tooltip")
     .style("opacity", 0.0);
 
+    var dragging = false
+    var x, y, mouseX, mouseY, offsetX, offsetY  
+
   const paths = worldmap
     .selectAll("path")
     .data(countries.features)
@@ -72,10 +76,18 @@ async function draw_map1(year = 1979) {
     .on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
     })
-    /*
-    .on("mousedown", function(d){
-      paths.attr("fill","blue")});*/
-}
+    .on("click", function(path,d){
+      var name = d.properties.name;
+      one_country = d3.select(this);
+      one_country.style("stroke","blue");
+      one_country.style("stroke-width",5);
+      one_country.attr("class","markedone")
+      draw_linechart(name);
+      
+    })
+    
+  
+    };
 
 //draw the map with points
 function draw_map2(){
@@ -114,11 +126,12 @@ worldmap
       .attr("fill","white")
       .attr("stroke","black")
       .attr('d', d => pathGenerator(d))
-      /*
-      .on("mousedown", function(path,d){
-        paths.attr("fill","blue")})
       
-        .on("mouseover", function (path, d) {
+      .on("mousedown", function(event,d){
+      d3.select(this).attr('fill', 'blue')})
+
+      
+      .on("mouseover", function (path, d) {
           var country_name = d.properties.name;
           div.transition().duration(200).style("opacity", 0.95);
           div
@@ -126,6 +139,8 @@ worldmap
             .style("left", event.pageX + "px")
             .style("top", event.pageY - 28 + "px");
         })
+      .on("mouseup", function(event,d){
+          d3.select(this).attr('fill', 'red')})
 
        doucument.onmousemove = function(event){
           event = event || window.event;
@@ -136,12 +151,7 @@ worldmap
           paths.style.top = top+"px";
         };
       });
-    paths.onmouseup = function(){
-      document.onmousemove = null;
-    }
-*/
     
-});
 
   d3.csv("globalterrorism.csv").then(function (data) {
     data.forEach((d) => {
@@ -180,10 +190,12 @@ worldmap
         div.transition().duration(500).style("opacity", 0);
       });
 
-  })
-  };
+  });
+}
 
 // The linechart starts from here
+
+function draw_linechart(country_name){
 d3.csv("data2.csv").then(function (data) {
   data.forEach((d) => {
     d.year = d.year;
@@ -207,8 +219,11 @@ d3.csv("data2.csv").then(function (data) {
 
   // Add the valueline path
   //console.log(data.)
+
+  
+
   g.append("path")
-    .datum(data.filter((d) => d.country == "Philippines"))
+    .datum(data.filter((d) => d.country == country_name))
     .attr("class", "line")
     .attr("fill", "none")
     .attr("stroke", "steelblue")
@@ -224,10 +239,14 @@ d3.csv("data2.csv").then(function (data) {
           return y(d.number);
         })
     );
-});
+      
+});}
 
 function clear_data(){
-  d3.selectAll(".line").remove()
+  d3.selectAll(".line").remove();
+  marked = d3.selectAll(".markedone")
+  .style("stroke-width",0)
+  .attr("class","countries");
 }
 
 var falg = true;
@@ -247,5 +266,5 @@ function change_view(){
     d3.selectAll(".point").remove();
     draw_map1();
     falg = true;
-  }
-  }
+  };
+}

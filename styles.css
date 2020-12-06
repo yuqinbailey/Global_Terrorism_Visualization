@@ -6,9 +6,13 @@ body {
   fill: white;
 }
 
+
+)
 .countries:hover {
   stroke: black;
 }
+
+
 
 div.tooltip {   
   position: absolute;           
@@ -47,7 +51,7 @@ div.tooltip {
 
 .description {
   position: absolute;
-  left: 930px;
+  left: 900px;
   top: 150px;
 }
 
