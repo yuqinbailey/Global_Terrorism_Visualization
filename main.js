@@ -48,6 +48,16 @@ async function draw_map1(year = 2000) {
     }
   };
 
+  // deal with Soviet Union
+  var show_Soviet = function (country_name, year) {
+    const Soviet_countries = ["Armenia","Azerbaijan","Belarus","Estonia","Georgia","Kazakhstan","Kyrgyzstan","Latvia","Lithuania","Moldova","Russia","Tajikistan","Turkmenistan","Ukraine","Uzbekistan"];
+    if (country_name in Soviet_countries, Number(year)<1992) {
+      return "Soviet Union";
+    } else {
+      return country_name;
+    }
+  }
+
   // tooltip
   var div = d3
     .select("body")
@@ -70,7 +80,7 @@ async function draw_map1(year = 2000) {
       var country_name = d.properties.name;
       div.transition().duration(200).style("opacity", 0.95);
       div
-        .html(country_name + "<br/>attack: " + attack_num(country_name))
+        .html(show_Soviet(country_name, year) + "<br/>attack: " + attack_num(country_name))
         .style("left", event.pageX + "px")
         .style("top", event.pageY - 28 + "px");
     })
