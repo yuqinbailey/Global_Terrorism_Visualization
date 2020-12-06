@@ -65,6 +65,8 @@ async function draw_map1(year = 2000) {
     .attr("class", "tooltip")
     .style("opacity", 0.0);
 
+    var dragging = false
+    var x, y, mouseX, mouseY, offsetX, offsetY  
 
   const paths = worldmap
     .selectAll("path")
@@ -85,6 +87,7 @@ async function draw_map1(year = 2000) {
     .on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
     })
+<<<<<<< HEAD
     .on("click", function(path,d){
       var name = d.properties.name;
       one_country = d3.select(this);
@@ -95,7 +98,10 @@ async function draw_map1(year = 2000) {
       
     })
     
-  }
+  
+    };
+=======
+    //.on("mousedown", function(d){paths.attr("fill","blue")});
 
     // slider
     var slider = d3.select('#slider');
@@ -106,6 +112,8 @@ async function draw_map1(year = 2000) {
         draw_map1(year);
         d3.select("output#slidertext").text(year);
     });
+}
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
 
 
 //draw the map with points
@@ -142,14 +150,35 @@ worldmap
       .attr("fill","white")
       .attr("stroke","black")
       .attr('d', d => pathGenerator(d))
-      .on("click", function(path,d){
-          var name = d.properties.name;
-          one_country = d3.select(this);
-          one_country.style("stroke","blue");
-          one_country.style("stroke-width",5);
-          one_country.attr("class","markedone")
-          draw_linechart(name);
+<<<<<<< HEAD
+      
+      .on("mousedown", function(event,d){
+      d3.select(this).attr('fill', 'blue')})
+
+      
+      .on("mouseover", function (path, d) {
+          var country_name = d.properties.name;
+          div.transition().duration(200).style("opacity", 0.95);
+          div
+            .html(country_name + "<br/>" + attack_num(country_name))
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY - 28 + "px");
         })
+      .on("mouseup", function(event,d){
+          d3.select(this).attr('fill', 'red')})
+
+       doucument.onmousemove = function(event){
+=======
+      /*
+      doucument.onmousemove = function(event){
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
+          event = event || window.event;
+          var left = event.clientX;
+          var top = event.clientY;
+        
+          paths.style.left = left+"px";
+          paths.style.top = top+"px";
+        };
       });
     
 
@@ -190,27 +219,28 @@ worldmap
         div.transition().duration(500).style("opacity", 0);
       });
 
+<<<<<<< HEAD
   });
 }
+=======
+    // slider
+    var slider = d3.select('#slider');
+    slider.on('change', function() {
+        var year = Number(this.value);
+        d3.selectAll(".sphere").remove();
+        d3.selectAll(".countries").remove();
+        d3.selectAll(".point").remove();
+        draw_map2(year);
+        d3.select("output#slidertext").text(year);
+    });
+
+  })
+  };
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
 
 // The linechart starts from here
 
-  let g = d3
-    .select("svg.linechart")
-    .append("g")
-    .attr("transform", "translate(" + 100 + "," + 290 + ")")
-    .attr("class", "linechart");
-
-  var x = d3.scaleLinear().domain([1970, 2020]).range([0, 430]);
-  g.append("g")
-    .attr("transform", "translate(0," + 300 + ")")
-    .call(d3.axisBottom(x));
-
-  var y = d3.scaleLinear().domain([0, 400]).range([300, 0]);
-  g.append("g").call(d3.axisLeft(y));
-
-
-function draw_linechart(country_name,country_array){
+function draw_linechart(country_name){
 d3.csv("data2.csv").then(function (data) {
   data.forEach((d) => {
     d.year = d.year;
@@ -260,8 +290,7 @@ d3.csv("data2.csv").then(function (data) {
 function clear_data(){
   d3.selectAll(".line").remove();
   marked = d3.selectAll(".markedone")
-  //.style("stroke", black)
-  .style("stroke-width",1)
+  .style("stroke-width",0)
   .attr("class","countries");
 }
 
