@@ -72,13 +72,22 @@ async function draw_map1(year = 1979) {
     .on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
     })
-    /*
-    .on("mousedown", function(d){
-      paths.attr("fill","blue")});*/
+    //.on("mousedown", function(d){paths.attr("fill","blue")});
+
+    // slider
+    var slider = d3.select('#slider');
+    slider.on('change', function() {
+        var year = Number(this.value);
+        d3.selectAll(".sphere").remove();
+        d3.selectAll(".countries").remove();
+        draw_map1(year);
+        d3.select("output#slidertext").text(year);
+    });
 }
 
+
 //draw the map with points
-function draw_map2(){
+function draw_map2(year = 1979){
 
   const projection = d3.geoMercator()
   .scale(135)
@@ -99,14 +108,11 @@ worldmap
   d3.json('world_map.json').then((data)=>{
     //console.log(data.objects);
     const countries = topojson.feature(data, data.objects.countries);
-    console.log(countries);
-    
-    
+        
 
     //console.log(pathGenerator.bounds(countries));
    
 
-    console.log(pathGenerator({type:'Sphere'}));
     const paths = svg.selectAll('path')
       .data(countries.features);
     paths.enter().append('path')
@@ -115,19 +121,7 @@ worldmap
       .attr("stroke","black")
       .attr('d', d => pathGenerator(d))
       /*
-      .on("mousedown", function(path,d){
-        paths.attr("fill","blue")})
-      
-        .on("mouseover", function (path, d) {
-          var country_name = d.properties.name;
-          div.transition().duration(200).style("opacity", 0.95);
-          div
-            .html(country_name + "<br/>" + attack_num(country_name))
-            .style("left", event.pageX + "px")
-            .style("top", event.pageY - 28 + "px");
-        })
-
-       doucument.onmousemove = function(event){
+      doucument.onmousemove = function(event){
           event = event || window.event;
           var left = event.clientX;
           var top = event.clientY;
@@ -160,7 +154,7 @@ worldmap
       .style("opacity", 0.0);
 
     worldmap.selectAll(".point")
-      .data(data.filter(d => d.year == 1979))
+      .data(data.filter(d => d.year == year))
       .enter().append('circle')
       .attr("class","point")
       .attr("cx",d => projection([d.longitude,d.latitude])[0])
@@ -179,6 +173,17 @@ worldmap
       .on("mouseout", function (d) {
         div.transition().duration(500).style("opacity", 0);
       });
+
+    // slider
+    var slider = d3.select('#slider');
+    slider.on('change', function() {
+        var year = Number(this.value);
+        d3.selectAll(".sphere").remove();
+        d3.selectAll(".countries").remove();
+        d3.selectAll(".point").remove();
+        draw_map2(year);
+        d3.select("output#slidertext").text(year);
+    });
 
   })
   };
@@ -239,7 +244,7 @@ function change_view(){
     d3.selectAll(".sphere").remove();
     d3.selectAll(".countries").remove();
     draw_map2();
-    console.log("change map1 to map 2")
+    console.log("Change from map1 to map 2")
     falg = false;
   }else{
     d3.selectAll(".countries").remove();
