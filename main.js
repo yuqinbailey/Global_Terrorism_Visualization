@@ -4,7 +4,7 @@ const height = +svg.attr("height");
 
 
 //draw map with different color
-async function draw_map1(year = 1979) {
+async function draw_map1(year = 2000) {
   const attack_data = await d3.csv("attack.csv");
   let attack = attack_data[Number(year) - 1970];
   
@@ -40,6 +40,7 @@ async function draw_map1(year = 1979) {
 
   var attack_num = function (country_name) {
     if (attack[country_name] === undefined) {
+      //console.log(country_name);
       return 0;
     } else {
       return attack[country_name];
@@ -65,7 +66,7 @@ async function draw_map1(year = 1979) {
       var country_name = d.properties.name;
       div.transition().duration(200).style("opacity", 0.95);
       div
-        .html(country_name + "<br/>" + attack_num(country_name))
+        .html(country_name + "<br/>attack: " + attack_num(country_name))
         .style("left", event.pageX + "px")
         .style("top", event.pageY - 28 + "px");
     })
@@ -87,7 +88,7 @@ async function draw_map1(year = 1979) {
 
 
 //draw the map with points
-function draw_map2(year = 1979){
+function draw_map2(year = 2000){
 
   const projection = d3.geoMercator()
   .scale(135)
