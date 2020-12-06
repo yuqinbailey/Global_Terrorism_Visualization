@@ -5,7 +5,7 @@ const height = +svg.attr("height");
 var country_array = new Array();
 
 //draw map with different color
-async function draw_map1(year = 1979) {
+async function draw_map1(year = 2000) {
   const attack_data = await d3.csv("attack.csv");
   let attack = attack_data[Number(year) - 1970];
   
@@ -41,6 +41,7 @@ async function draw_map1(year = 1979) {
 
   var attack_num = function (country_name) {
     if (attack[country_name] === undefined) {
+      //console.log(country_name);
       return 0;
     } else {
       return attack[country_name];
@@ -69,13 +70,14 @@ async function draw_map1(year = 1979) {
       var country_name = d.properties.name;
       div.transition().duration(200).style("opacity", 0.95);
       div
-        .html(country_name + "<br/>" + attack_num(country_name))
+        .html(country_name + "<br/>attack: " + attack_num(country_name))
         .style("left", event.pageX + "px")
         .style("top", event.pageY - 28 + "px");
     })
     .on("mouseout", function (d) {
       div.transition().duration(500).style("opacity", 0);
     })
+<<<<<<< HEAD
     .on("click", function(path,d){
       var name = d.properties.name;
       one_country = d3.select(this);
@@ -88,9 +90,24 @@ async function draw_map1(year = 1979) {
     
   
     };
+=======
+    //.on("mousedown", function(d){paths.attr("fill","blue")});
+
+    // slider
+    var slider = d3.select('#slider');
+    slider.on('change', function() {
+        var year = Number(this.value);
+        d3.selectAll(".sphere").remove();
+        d3.selectAll(".countries").remove();
+        draw_map1(year);
+        d3.select("output#slidertext").text(year);
+    });
+}
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
+
 
 //draw the map with points
-function draw_map2(){
+function draw_map2(year = 2000){
 
   const projection = d3.geoMercator()
   .scale(135)
@@ -111,14 +128,11 @@ worldmap
   d3.json('world_map.json').then((data)=>{
     //console.log(data.objects);
     const countries = topojson.feature(data, data.objects.countries);
-    console.log(countries);
-    
-    
+        
 
     //console.log(pathGenerator.bounds(countries));
    
 
-    console.log(pathGenerator({type:'Sphere'}));
     const paths = svg.selectAll('path')
       .data(countries.features);
     paths.enter().append('path')
@@ -126,6 +140,7 @@ worldmap
       .attr("fill","white")
       .attr("stroke","black")
       .attr('d', d => pathGenerator(d))
+<<<<<<< HEAD
       
       .on("mousedown", function(event,d){
       d3.select(this).attr('fill', 'blue')})
@@ -143,6 +158,10 @@ worldmap
           d3.select(this).attr('fill', 'red')})
 
        doucument.onmousemove = function(event){
+=======
+      /*
+      doucument.onmousemove = function(event){
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
           event = event || window.event;
           var left = event.clientX;
           var top = event.clientY;
@@ -170,7 +189,7 @@ worldmap
       .style("opacity", 0.0);
 
     worldmap.selectAll(".point")
-      .data(data.filter(d => d.year == 1979))
+      .data(data.filter(d => d.year == year))
       .enter().append('circle')
       .attr("class","point")
       .attr("cx",d => projection([d.longitude,d.latitude])[0])
@@ -190,8 +209,24 @@ worldmap
         div.transition().duration(500).style("opacity", 0);
       });
 
+<<<<<<< HEAD
   });
 }
+=======
+    // slider
+    var slider = d3.select('#slider');
+    slider.on('change', function() {
+        var year = Number(this.value);
+        d3.selectAll(".sphere").remove();
+        d3.selectAll(".countries").remove();
+        d3.selectAll(".point").remove();
+        draw_map2(year);
+        d3.select("output#slidertext").text(year);
+    });
+
+  })
+  };
+>>>>>>> 0eab0a613b49109b0a1c9054939544cd19a25c16
 
 // The linechart starts from here
 
@@ -258,7 +293,7 @@ function change_view(){
     d3.selectAll(".sphere").remove();
     d3.selectAll(".countries").remove();
     draw_map2();
-    console.log("change map1 to map 2")
+    console.log("Change from map1 to map 2")
     falg = false;
   }else{
     d3.selectAll(".countries").remove();
