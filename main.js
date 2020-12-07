@@ -68,12 +68,12 @@ async function draw_map1(year = 2000) {
       "Ukraine",
       "Uzbekistan",
     ];
-    if (Number(year) < 1992) {
-      if (Soviet_countries.includes(country_name)) {
-        return "Soviet Union";
-      } else {
-        return country_name;
-      }
+    if ((Number(year) < 1992)) {
+        if (Soviet_countries.includes(country_name)) {
+            return "Soviet Union";
+        } else {
+            return country_name;
+        }
     } else {
       return country_name;
     }
@@ -86,9 +86,6 @@ async function draw_map1(year = 2000) {
     .attr("class", "tooltip")
     .style("opacity", 0.0);
 
-  var dragging = false;
-  var x, y, mouseX, mouseY, offsetX, offsetY;
-
   const paths = worldmap
     .selectAll("path")
     .data(countries.features)
@@ -96,6 +93,7 @@ async function draw_map1(year = 2000) {
     .append("path")
     .attr("class", "countries")
     .attr("d", (d) => pathGenerator(d))
+    .attr("stroke", "black")
     .attr("fill", (d) => color(4000 - attack_num(d.properties.name) * 100))
     .on("mouseover", function (path, d) {
       var country_name = d.properties.name;
@@ -120,17 +118,18 @@ async function draw_map1(year = 2000) {
       one_country.attr("class", "markedone");
       draw_linechart(name);
     });
+
+  // slider
+  var slider = d3.select("#slider");
+  slider.on("change", function () {
+    var year = Number(this.value);
+    d3.selectAll(".sphere").remove();
+    d3.selectAll(".countries").remove();
+    draw_map1(year);
+    d3.select("output#slidertext").text(year);
+  });
 }
 
-// slider
-var slider = d3.select("#slider");
-slider.on("change", function () {
-  var year = Number(this.value);
-  d3.selectAll(".sphere").remove();
-  d3.selectAll(".countries").remove();
-  draw_map1(year);
-  d3.select("output#slidertext").text(year);
-});
 
 //draw the map with points
 function draw_map2(year = 2000) {
@@ -151,7 +150,6 @@ function draw_map2(year = 2000) {
     .attr("d", pathGenerator({ type: "Sphere" }));
 
   d3.json("world_map.json").then((data) => {
-    //console.log(data.objects);
     const countries = topojson.feature(data, data.objects.countries);
 
     //console.log(pathGenerator.bounds(countries));
@@ -181,59 +179,74 @@ function draw_map2(year = 2000) {
         one_country.attr("class", "markedone");
         draw_linechart(name);
       });
+  });
 
-    d3.csv("globalterrorism.csv").then(function (data) {
-      data.forEach((d) => {
-        d.year = +d.iyear;
-        d.city = d.city;
-        d.latitude = +d.latitude;
-        d.longitude = +d.longitude;
-        d.attacktype = d.attacktype;
-        d.size = +d.nkill;
-      });
-
-      var div = d3
-        .select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0.0);
-
-      worldmap
-        .selectAll(".point")
-        .data(data.filter((d) => d.year == year))
-        .enter()
-        .append("circle")
-        .attr("class", "point")
-        .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
-        .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
-        .attr("r", 3)
-        .attr("fill", "red")
-        .on("mouseover", function (point, d) {
-          var city_name = d.city;
-          var casualty = d.size;
-          div.transition().duration(200).style("opacity", 0.95);
-          div
-            .html(city_name + "<br/>" + "casualty: " + casualty)
-            .style("left", event.pageX + "px")
-            .style("top", event.pageY - 28 + "px");
-        })
-        .on("mouseout", function (d) {
-          div.transition().duration(500).style("opacity", 0);
-        });
+  d3.csv("globalterrorism.csv").then(function (data) {
+    data.forEach((d) => {
+      d.year = +d.iyear;
+      d.city = d.city;
+      d.latitude = +d.latitude;
+      d.longitude = +d.longitude;
+      d.attacktype = d.attacktype;
+      d.size = +d.nkill;
     });
+
+    var div = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0.0);
+
+    worldmap
+      .selectAll(".point")
+      .data(data.filter((d) => d.year == year))
+      .enter()
+      .append("circle")
+      .attr("class", "point")
+      .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
+      .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
+      .attr("r", (d) => point_r(d.size))
+      .attr("fill", "red")
+      .style("stroke", "black")
+      .on("mouseover", function (point, d) {
+        var city_name = d.city;
+        var casualty = d.size;
+        div.transition().duration(200).style("opacity", 0.95);
+        div
+          .html(country_name + "<br/>" + attack_num(country_name))
+          .style("left", event.pageX + "px")
+          .style("top", event.pageY - 28 + "px");
+      })
+      .on("click", function (path, d) {
+        var name = d.properties.name;
+        one_country = d3.select(this);
+        one_country.style("stroke", "blue");
+        one_country.style("stroke-width", 5);
+        one_country.attr("class", "markedone");
+        draw_linechart(name);
+      });
   });
 
   // slider
   var slider = d3.select("#slider");
-  slider.on("change", function () {
-    var year = Number(this.value);
-    d3.selectAll(".sphere").remove();
-    d3.selectAll(".countries").remove();
-    d3.selectAll(".point").remove();
-    draw_map2(year);
-    d3.select("output#slidertext").text(year);
-  });
+  slider
+    .on("change", function () {
+      div.transition().duration(200).style("opacity", 0.95);
+      div
+        .html(country_name + "<br/>" + attack_num(country_name))
+        .style("left", event.pageX + "px")
+        .style("top", event.pageY - 28 + "px");
+    })
+    .on("click", function (path, d) {
+      var name = d.properties.name;
+      one_country = d3.select(this);
+      one_country.style("stroke", "blue");
+      one_country.style("stroke-width", 5);
+      one_country.attr("class", "markedone");
+      draw_linechart(name);
+    });
 }
+
 
 // The linechart starts from here
 let g = d3
@@ -243,11 +256,12 @@ let g = d3
   .attr("class", "linechart");
 
 var x = d3.scaleLinear().domain([1970, 2020]).range([0, 430]);
+
 g.append("g")
   .attr("transform", "translate(0," + 300 + ")")
   .call(d3.axisBottom(x));
 
-var y = d3.scaleLinear().domain([0, 400]).range([300, 0]);
+var y = d3.scaleLinear().domain([0, 400]).range([300, 0]); // TODO
 g.append("g").call(d3.axisLeft(y));
 
 function draw_linechart(country_name) {
@@ -312,14 +326,14 @@ function change_view() {
   if (falg) {
     d3.selectAll(".sphere").remove();
     d3.selectAll(".countries").remove();
-    draw_map2(year);
+    draw_map2();
     console.log("Change from map1 to map 2");
     falg = false;
   } else {
     d3.selectAll(".countries").remove();
     d3.selectAll(".sphere").remove();
     d3.selectAll(".point").remove();
-    draw_map1(year);
+    draw_map1();
     falg = true;
   }
-}
+};
