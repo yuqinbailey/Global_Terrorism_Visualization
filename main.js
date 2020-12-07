@@ -185,9 +185,26 @@ function draw_map2(year = 2000) {
       d.city = d.city;
       d.latitude = +d.latitude;
       d.longitude = +d.longitude;
-      d.attacktype = d.attacktype;
       d.size = +d.nkill;
     });
+
+function point_color(num){
+  if (num ==0){
+    return "rgb(255,150,150)"
+  }else{
+    if(num <= 10){
+      return "rgb(255,100,100)"
+    }else{
+      if (num <=50){
+        return "rgb(255,50,50)"
+      }else{
+        if(num <= 100){
+          return "rgb(255,30,30)"
+        }else{return "rgb(255,0,0)"}
+      }
+    }
+  }
+}
 
     worldmap
       .selectAll(".point")
@@ -197,9 +214,9 @@ function draw_map2(year = 2000) {
       .attr("class", "point")
       .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
       .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
-      .attr("r", (d) => 3)
-      .attr("fill", "red")
-      .style("stroke", "black")
+      .attr("r",  3)
+      .attr("fill", (d) =>point_color(d.size))
+      //.style("stroke", "black")
       .on("mouseover", function (point, d) {
         var city_name = d.city;
         var casualty = d.size;
@@ -298,7 +315,7 @@ function clear_data() {
   marked = d3
     .selectAll(".markedone")
     .style("stroke-width", 1)
-    .style("stroke", black)
+    marked.style("stroke", black)
     .attr("class", "countries");
 }
 
