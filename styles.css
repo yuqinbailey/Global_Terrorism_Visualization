@@ -72,3 +72,24 @@ div.tooltip {
   left: 1390px;
   top: 750px;
 }
+
+#hint {
+  background-color: rgb(239, 236, 234);
+  position: absolute;
+  left: 1040px;
+  top: 400px;
+  border: 2px dashed rgb(99, 95, 93);
+  padding: 50px 60px;
+}
+
+#hint p{
+  color: rgb(99, 95, 93);
+}
+
+#x_axis{
+  stroke-width: 2px;
+}
+
+#y_axis{
+  stroke-width: 2px;
+}

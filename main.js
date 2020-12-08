@@ -9,6 +9,9 @@ const color = d3
 var country_array = new Array();
 var year = 2000;
 
+var div_hint = d3.select("#hint")
+      .style("opacity",1.0)
+
 const dataPromise = Promise.all([
   d3.json("world_map.json"),
   d3.csv("attack.csv"),
@@ -129,11 +132,12 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       })
       .on("click", function (path, d) {
         var name = d.properties.name;
-        one_country = d3.select(this);
-        one_country.style("stroke", "blue");
-        one_country.style("stroke-width", 5);
-        one_country.attr("class", "markedone");
+        one_country = d3.select(this)
+          .style("stroke", "blue")
+          .style("stroke-width", 5)
+          .attr("class", "markedone");
         country_array.push(name);
+        d3.select("#hint").style("opacity",0.0);
         draw_linechart(country_array);
       });
 
@@ -167,11 +171,12 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
       .on("click", function (path, d) {
         var name = d.properties.name;
-        one_country = d3.select(this);
-        one_country.style("stroke", "blue");
-        one_country.style("stroke-width", 5);
-        one_country.attr("class", "markedone");
+        one_country = d3.select(this)
+          .style("stroke", "blue")
+          .style("stroke-width", 5)
+          .attr("class", "markedone");
         country_array.push(name);
+        d3.select("#hint").style("opacity",0.0);
         draw_linechart(country_array);
       });
 
@@ -289,6 +294,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("class", "tooltip")
       .style("opacity", 0.0);
 
+    
+      
     for (i in country_array) {
       g.append("path")
         .datum(data2.filter((d) => country_array[i] == d.country))
@@ -338,6 +345,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   };
 
   btns[1].onclick = function clear_data() {
+    d3.select("#hint").style("opacity",0.95);
     country_array = [];
     d3.selectAll(".line").remove();
     marked = d3.selectAll(".markedone").style("stroke-width", 1);
