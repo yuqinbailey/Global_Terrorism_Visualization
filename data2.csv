@@ -1,52 +1,52 @@
 year,country,data
-1970,Dominican Republic,2
-1971,Dominican Republic,3
-1972,Dominican Republic,0
-1973,Dominican Republic,3
-1974,Dominican Republic,2
-1975,Dominican Republic,0
-1976,Dominican Republic,0
-1977,Dominican Republic,0
-1978,Dominican Republic,1
-1979,Dominican Republic,2
-1980,Dominican Republic,1
-1981,Dominican Republic,0
-1982,Dominican Republic,2
-1983,Dominican Republic,0
-1984,Dominican Republic,0
-1985,Dominican Republic,0
-1986,Dominican Republic,0
-1987,Dominican Republic,15
-1988,Dominican Republic,2
-1989,Dominican Republic,11
-1990,Dominican Republic,2
-1991,Dominican Republic,8
-1992,Dominican Republic,11
-1993,Dominican Republic,0
-1994,Dominican Republic,7
-1995,Dominican Republic,0
-1996,Dominican Republic,3
-1997,Dominican Republic,12
-1998,Dominican Republic,0
-1999,Dominican Republic,0
-2000,Dominican Republic,0
-2001,Dominican Republic,0
-2002,Dominican Republic,0
-2003,Dominican Republic,0
-2004,Dominican Republic,0
-2005,Dominican Republic,0
-2006,Dominican Republic,0
-2007,Dominican Republic,0
-2008,Dominican Republic,0
-2009,Dominican Republic,0
-2010,Dominican Republic,0
-2011,Dominican Republic,0
-2012,Dominican Republic,0
-2013,Dominican Republic,1
-2014,Dominican Republic,1
-2015,Dominican Republic,0
-2016,Dominican Republic,0
-2017,Dominican Republic,1
+1970,Dominican Rep,2
+1971,Dominican Rep,3
+1972,Dominican Rep,0
+1973,Dominican Rep,3
+1974,Dominican Rep,2
+1975,Dominican Rep,0
+1976,Dominican Rep,0
+1977,Dominican Rep,0
+1978,Dominican Rep,1
+1979,Dominican Rep,2
+1980,Dominican Rep,1
+1981,Dominican Rep,0
+1982,Dominican Rep,2
+1983,Dominican Rep,0
+1984,Dominican Rep,0
+1985,Dominican Rep,0
+1986,Dominican Rep,0
+1987,Dominican Rep,15
+1988,Dominican Rep,2
+1989,Dominican Rep,11
+1990,Dominican Rep,2
+1991,Dominican Rep,8
+1992,Dominican Rep,11
+1993,Dominican Rep,0
+1994,Dominican Rep,7
+1995,Dominican Rep,0
+1996,Dominican Rep,3
+1997,Dominican Rep,12
+1998,Dominican Rep,0
+1999,Dominican Rep,0
+2000,Dominican Rep,0
+2001,Dominican Rep,0
+2002,Dominican Rep,0
+2003,Dominican Rep,0
+2004,Dominican Rep,0
+2005,Dominican Rep,0
+2006,Dominican Rep,0
+2007,Dominican Rep,0
+2008,Dominican Rep,0
+2009,Dominican Rep,0
+2010,Dominican Rep,0
+2011,Dominican Rep,0
+2012,Dominican Rep,0
+2013,Dominican Rep,1
+2014,Dominican Rep,1
+2015,Dominican Rep,0
+2016,Dominican Rep,0
+2017,Dominican Rep,1
 1970,Mexico,2
 1971,Mexico,0
 1972,Mexico,1
@@ -239,54 +239,54 @@ year,country,data
 2015,Japan,10
 2016,Japan,1
 2017,Japan,0
-1970,United States,468
-1971,United States,247
-1972,United States,68
-1973,United States,58
-1974,United States,94
-1975,United States,149
-1976,United States,105
-1977,United States,130
-1978,United States,87
-1979,United States,69
-1980,United States,67
-1981,United States,74
-1982,United States,78
-1983,United States,44
-1984,United States,63
-1985,United States,40
-1986,United States,49
-1987,United States,34
-1988,United States,27
-1989,United States,42
-1990,United States,32
-1991,United States,30
-1992,United States,32
-1993,United States,0
-1994,United States,55
-1995,United States,60
-1996,United States,35
-1997,United States,40
-1998,United States,31
-1999,United States,53
-2000,United States,32
-2001,United States,41
-2002,United States,33
-2003,United States,33
-2004,United States,9
-2005,United States,20
-2006,United States,6
-2007,United States,8
-2008,United States,18
-2009,United States,11
-2010,United States,17
-2011,United States,10
-2012,United States,20
-2013,United States,20
-2014,United States,29
-2015,United States,38
-2016,United States,64
-2017,United States,65
+1970,United States of America,468
+1971,United States of America,247
+1972,United States of America,68
+1973,United States of America,58
+1974,United States of America,94
+1975,United States of America,149
+1976,United States of America,105
+1977,United States of America,130
+1978,United States of America,87
+1979,United States of America,69
+1980,United States of America,67
+1981,United States of America,74
+1982,United States of America,78
+1983,United States of America,44
+1984,United States of America,63
+1985,United States of America,40
+1986,United States of America,49
+1987,United States of America,34
+1988,United States of America,27
+1989,United States of America,42
+1990,United States of America,32
+1991,United States of America,30
+1992,United States of America,32
+1993,United States of America,0
+1994,United States of America,55
+1995,United States of America,60
+1996,United States of America,35
+1997,United States of America,40
+1998,United States of America,31
+1999,United States of America,53
+2000,United States of America,32
+2001,United States of America,41
+2002,United States of America,33
+2003,United States of America,33
+2004,United States of America,9
+2005,United States of America,20
+2006,United States of America,6
+2007,United States of America,8
+2008,United States of America,18
+2009,United States of America,11
+2010,United States of America,17
+2011,United States of America,10
+2012,United States of America,20
+2013,United States of America,20
+2014,United States of America,29
+2015,United States of America,38
+2016,United States of America,64
+2017,United States of America,65
 1970,Uruguay,33
 1971,Uruguay,8
 1972,Uruguay,7
@@ -9215,54 +9215,54 @@ year,country,data
 2015,Vanuatu,0
 2016,Vanuatu,0
 2017,Vanuatu,0
-1970,Democratic Republic of the Congo,0
-1971,Democratic Republic of the Congo,0
-1972,Democratic Republic of the Congo,0
-1973,Democratic Republic of the Congo,0
-1974,Democratic Republic of the Congo,0
-1975,Democratic Republic of the Congo,0
-1976,Democratic Republic of the Congo,0
-1977,Democratic Republic of the Congo,0
-1978,Democratic Republic of the Congo,0
-1979,Democratic Republic of the Congo,0
-1980,Democratic Republic of the Congo,0
-1981,Democratic Republic of the Congo,0
-1982,Democratic Republic of the Congo,0
-1983,Democratic Republic of the Congo,0
-1984,Democratic Republic of the Congo,0
-1985,Democratic Republic of the Congo,0
-1986,Democratic Republic of the Congo,0
-1987,Democratic Republic of the Congo,0
-1988,Democratic Republic of the Congo,0
-1989,Democratic Republic of the Congo,0
-1990,Democratic Republic of the Congo,0
-1991,Democratic Republic of the Congo,0
-1992,Democratic Republic of the Congo,0
-1993,Democratic Republic of the Congo,0
-1994,Democratic Republic of the Congo,0
-1995,Democratic Republic of the Congo,0
-1996,Democratic Republic of the Congo,0
-1997,Democratic Republic of the Congo,1
-1998,Democratic Republic of the Congo,4
-1999,Democratic Republic of the Congo,3
-2000,Democratic Republic of the Congo,3
-2001,Democratic Republic of the Congo,5
-2002,Democratic Republic of the Congo,7
-2003,Democratic Republic of the Congo,6
-2004,Democratic Republic of the Congo,5
-2005,Democratic Republic of the Congo,5
-2006,Democratic Republic of the Congo,5
-2007,Democratic Republic of the Congo,11
-2008,Democratic Republic of the Congo,20
-2009,Democratic Republic of the Congo,54
-2010,Democratic Republic of the Congo,18
-2011,Democratic Republic of the Congo,16
-2012,Democratic Republic of the Congo,25
-2013,Democratic Republic of the Congo,22
-2014,Democratic Republic of the Congo,110
-2015,Democratic Republic of the Congo,143
-2016,Democratic Republic of the Congo,169
-2017,Democratic Republic of the Congo,143
+1970,Dem. Rep. Congo,0
+1971,Dem. Rep. Congo,0
+1972,Dem. Rep. Congo,0
+1973,Dem. Rep. Congo,0
+1974,Dem. Rep. Congo,0
+1975,Dem. Rep. Congo,0
+1976,Dem. Rep. Congo,0
+1977,Dem. Rep. Congo,0
+1978,Dem. Rep. Congo,0
+1979,Dem. Rep. Congo,0
+1980,Dem. Rep. Congo,0
+1981,Dem. Rep. Congo,0
+1982,Dem. Rep. Congo,0
+1983,Dem. Rep. Congo,0
+1984,Dem. Rep. Congo,0
+1985,Dem. Rep. Congo,0
+1986,Dem. Rep. Congo,0
+1987,Dem. Rep. Congo,0
+1988,Dem. Rep. Congo,0
+1989,Dem. Rep. Congo,0
+1990,Dem. Rep. Congo,0
+1991,Dem. Rep. Congo,0
+1992,Dem. Rep. Congo,0
+1993,Dem. Rep. Congo,0
+1994,Dem. Rep. Congo,0
+1995,Dem. Rep. Congo,0
+1996,Dem. Rep. Congo,0
+1997,Dem. Rep. Congo,1
+1998,Dem. Rep. Congo,4
+1999,Dem. Rep. Congo,3
+2000,Dem. Rep. Congo,3
+2001,Dem. Rep. Congo,5
+2002,Dem. Rep. Congo,7
+2003,Dem. Rep. Congo,6
+2004,Dem. Rep. Congo,5
+2005,Dem. Rep. Congo,5
+2006,Dem. Rep. Congo,5
+2007,Dem. Rep. Congo,11
+2008,Dem. Rep. Congo,20
+2009,Dem. Rep. Congo,54
+2010,Dem. Rep. Congo,18
+2011,Dem. Rep. Congo,16
+2012,Dem. Rep. Congo,25
+2013,Dem. Rep. Congo,22
+2014,Dem. Rep. Congo,110
+2015,Dem. Rep. Congo,143
+2016,Dem. Rep. Congo,169
+2017,Dem. Rep. Congo,143
 1970,Kosovo,0
 1971,Kosovo,0
 1972,Kosovo,0
@@ -9839,3 +9839,51 @@ year,country,data
 2015,South Sudan,54
 2016,South Sudan,59
 2017,South Sudan,54
+1970,Mongolia,0
+1971,Mongolia,0
+1972,Mongolia,0
+1973,Mongolia,0
+1974,Mongolia,0
+1975,Mongolia,0
+1976,Mongolia,0
+1977,Mongolia,0
+1978,Mongolia,0
+1979,Mongolia,0
+1980,Mongolia,0
+1981,Mongolia,0
+1982,Mongolia,0
+1983,Mongolia,0
+1984,Mongolia,0
+1985,Mongolia,0
+1986,Mongolia,0
+1987,Mongolia,0
+1988,Mongolia,0
+1989,Mongolia,0
+1990,Mongolia,0
+1991,Mongolia,0
+1992,Mongolia,0
+1993,Mongolia,0
+1994,Mongolia,0
+1995,Mongolia,0
+1996,Mongolia,0
+1997,Mongolia,0
+1998,Mongolia,0
+1999,Mongolia,0
+2000,Mongolia,0
+2001,Mongolia,0
+2002,Mongolia,0
+2003,Mongolia,0
+2004,Mongolia,0
+2005,Mongolia,0
+2006,Mongolia,0
+2007,Mongolia,0
+2008,Mongolia,0
+2009,Mongolia,0
+2010,Mongolia,0
+2011,Mongolia,0
+2012,Mongolia,0
+2013,Mongolia,0
+2014,Mongolia,0
+2015,Mongolia,0
+2016,Mongolia,0
+2017,Mongolia,0
