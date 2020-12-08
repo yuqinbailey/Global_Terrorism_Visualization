@@ -51,11 +51,11 @@ div.tooltip {
 
 .description {
   position: absolute;
-  left: 900px;
+  left: 950px;
   top: 150px;
 }
 
-#change_view {
+#btn1 {
   position: absolute;
   left: 750px;
   top: 120px;
@@ -67,7 +67,7 @@ div.tooltip {
   top: 80px;
 }
 
-#clear {
+#btn2 {
   position: absolute;
   left: 1390px;
   top: 750px;
