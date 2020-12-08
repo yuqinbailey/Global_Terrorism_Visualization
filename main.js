@@ -5,6 +5,7 @@ const height = +svg.attr("height");
 var country_array = new Array();
 var year = 2000;
 
+
 //draw map with different color
 async function draw_map1(year = 2000) {
   const attack_data = await d3.csv("attack.csv");
@@ -116,7 +117,8 @@ async function draw_map1(year = 2000) {
       one_country.style("stroke", "blue");
       one_country.style("stroke-width", 5);
       one_country.attr("class", "markedone");
-      draw_linechart(name);
+      country_array.push(name);
+      draw_linechart(country_array);
     });
 
   // slider
@@ -169,7 +171,9 @@ function draw_map2(year = 2000) {
         one_country.style("stroke", "blue");
         one_country.style("stroke-width", 5);
         one_country.attr("class", "markedone");
-        draw_linechart(name);
+        country_array.push(name);
+        draw_linechart(country_array);
+        
       });
   });
 
@@ -226,13 +230,8 @@ function point_color(num){
           .style("left", event.pageX + "px")
           .style("top", event.pageY - 28 + "px");
       })
-      .on("click", function (path, d) {
-        var name = d.properties.name;
-        one_country = d3.select(this);
-        one_country.style("stroke", "blue");
-        one_country.style("stroke-width", 5);
-        one_country.attr("class", "markedone");
-        draw_linechart(name);
+      .on("mouseout", function (d) {
+        div.transition().duration(500).style("opacity", 0);
       });
   });
 
@@ -254,18 +253,23 @@ let g = d3
   .select("svg.linechart")
   .append("g")
   .attr("transform", "translate(" + 100 + "," + 290 + ")")
-  .attr("class", "linechart");
+  .attr("id", "linechart");
 
 var x = d3.scaleLinear().domain([1970, 2020]).range([0, 430]);
 
 g.append("g")
   .attr("transform", "translate(0," + 300 + ")")
+  .attr("id","x_axis")
   .call(d3.axisBottom(x));
 
-var y = d3.scaleLinear().domain([0, 400]).range([300, 0]); // TODO
-g.append("g").call(d3.axisLeft(y));
+var max_y = 100
 
-function draw_linechart(country_name) {
+var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]); // TODO
+g.append("g")
+.attr("id","y_axis")
+.call(d3.axisLeft(y));
+
+function draw_linechart(country_array) {
   d3.csv("data2.csv").then(function (data) {
     data.forEach((d) => {
       d.year = d.year;
@@ -273,49 +277,59 @@ function draw_linechart(country_name) {
       d.number = +d.data;
     });
 
-    let g = d3
-      .select("svg.linechart")
-      .append("g")
-      .attr("transform", "translate(" + 100 + "," + 290 + ")")
-      .attr("class", "linechart");
+    d3.select("#y_axis").remove()
 
-    var x = d3.scaleLinear().domain([1970, 2020]).range([0, 430]);
-    g.append("g")
-      .attr("transform", "translate(0," + 300 + ")")
-      .call(d3.axisBottom(x));
 
-    var y = d3.scaleLinear().domain([0, 400]).range([300, 0]);
-    g.append("g").call(d3.axisLeft(y));
+console.log(country_array)
+var y_scale = [];
+for (i in country_array){
+  //console.log(country_array[i])
+  n = d3.max(data.filter((d)=> d.country == country_array[i]),(d)=> d.number);
+  //console.log(n)
+  y_scale.push(parseInt(n*1.2));
+}
 
-    // Add the valueline path
-    //console.log(data.)
+console.log(Math.max(...y_scale))
 
-    g.append("path")
-      .datum(data.filter((d) => d.country == country_name))
-      .attr("class", "line")
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr(
-        "d",
-        d3
-          .line()
-          .x(function (d) {
-            return x(d.year);
-          })
-          .y(function (d) {
-            return y(d.number);
-          })
-      );
+max_y = Math.max(...y_scale)
+
+var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
+g = d3.select("#linechart").append("g")
+  .call(d3.axisLeft(y))
+  .attr("id","y_axis");
+
+      
+for (i in country_array){
+  g.append("path")
+  .datum(data.filter((d) => country_array[i] == d.country))
+  .attr("class", "line")
+  .attr("fill", "none")
+  .attr("stroke", "steelblue")
+  .attr("stroke-width", 1.5)
+  .attr(
+    "d",
+    d3
+      .line()
+      .x(function (d) {
+        return x(d.year);
+      })
+      .y(function (d) {
+        return y(d.number);
+      })
+  ); 
+}
+
+    
   });
 }
 
 function clear_data() {
+  country_array = []
   d3.selectAll(".line").remove();
   marked = d3
     .selectAll(".markedone")
     .style("stroke-width", 1)
-    marked.style("stroke", black)
+    marked.style("stroke", "black")
     .attr("class", "countries");
 }
 
