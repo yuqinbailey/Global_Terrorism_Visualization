@@ -84,6 +84,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   async function draw_map1(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
+    d3.select("#legend").style("opacity",0.0);
+
     worldmap
       .append("path")
       .attr("class", "sphere")
@@ -156,6 +158,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   function draw_map2(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
+    d3.select("#legend").style("opacity",1.0);
+
     worldmap
       .append("path")
       .attr("class", "sphere")
@@ -207,6 +211,18 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       }
     }
 
+    var colorScale = d3.scaleLinear()
+.domain([0,100])
+.range(["rgb(255,150,150)","rgb(255,100,100)"]);
+
+var legend = d3.legendColor()
+.scale(colorScale);
+
+lengg= d3.select("svg.mappp").append("g")
+.attr("id","legend")
+.attr("transform","translate(100,600)")
+.call(legend);
+
     worldmap
       .selectAll(".point")
       .data(global.filter((d) => d.year == year))
@@ -217,8 +233,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
       .attr("r", 2)
       .attr("fill", (d) => point_color(d.size))
-      .style("stroke", (d) => point_color(d.size))
-      .style("opacity", 0.86)
       .on("mouseover", function (point, d) {
         var city_name = d.city;
         var casualty = d.size;
