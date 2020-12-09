@@ -84,8 +84,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   async function draw_map1(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
-    d3.select("#legend").style("opacity",0.0);
-
     worldmap
       .append("path")
       .attr("class", "sphere")
@@ -158,8 +156,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   function draw_map2(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
-    d3.select("#legend").style("opacity",1.0);
-
     worldmap
       .append("path")
       .attr("class", "sphere")
@@ -211,9 +207,10 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       }
     }
 
+  //The legend 
     var colorScale = d3.scaleLinear()
-.domain([0,100])
-.range(["rgb(255,150,150)","rgb(255,100,100)"]);
+.domain([100,0])
+.range(["rgb(255,100,100)","rgb(255,150,150)"]);
 
 var legend = d3.legendColor()
 .scale(colorScale);
@@ -374,12 +371,14 @@ lengg= d3.select("svg.mappp").append("g")
 
   btns[0].onclick = function change_view() {
     if (falg) {
+      d3.selectAll("#legend").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".countries").remove();
       draw_map2(year);
       console.log("Change from map1 to map 2");
       falg = false;
     } else {
+      d3.selectAll("#legend").remove();
       d3.selectAll(".countries").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".point").remove();
