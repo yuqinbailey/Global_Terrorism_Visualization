@@ -14,7 +14,8 @@ body {
 }
 
 .sphere {
-  fill: rgb(240, 255, 255);
+  fill: rgb(122, 213, 255);
+  opacity: 0.4
 }
 
 .countries:hover {
@@ -36,29 +37,17 @@ div.tooltip {
   pointer-events: none;         
 }
 
-/*
-.year_slider{
-    position: absolute;
-    left: 10px;
-    text-align: center;
-    width: 60px;
-    height: 28px;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: rgb(243, 239, 22);
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-  }
-  */
+
 .mappp{
-  background-color: rgb(240, 255, 255);
+  background-color: rgb(255,255,255);
+  position: absolute;
+  top: 80px;
 }
 
 .year_slider {
   position: absolute;
   left: 50px;
-  top: 40px;
+  top: 100px;
 }
 
 .description {
@@ -77,7 +66,7 @@ div.tooltip {
   position: absolute;
   left: 900px;
   top: 80px;
-  background-color: rgb(240, 255, 255);
+  background-color: rgb(255,255,255);
 }
 
 #btn2 {

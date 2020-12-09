@@ -23,7 +23,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     .scale(135)
     .center([-11, 0])
     .rotate([0, 0])
-    .translate([width / 2, height / 2]);
+    .translate([width / 2, height / 2 +20]);
   const pathGenerator = d3.geoPath().projection(projection);
   const paths = svg.selectAll("path").data(countries.features);
 
@@ -63,12 +63,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     }
   };
 
-  function random_color(){
-    a = parseInt(Math.random()*255);
-    b = parseInt(Math.random()*255);
-    c = parseInt(Math.random()*255);
-    return [a,b,c]
-  }
 
   global.forEach((d) => {
     d.year = +d.iyear;
@@ -82,7 +76,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   data2.forEach((d) => {
     d.year = +d.year;
     d.data = +d.data;
-    d.color = "rgb("+random_color()[0]+","+random_color()[1]+","+random_color()[2]+")";
   });
 
   console.log(data2);
@@ -322,7 +315,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .datum(data2.filter((d) => country_array[i] == d.country))
         .attr("class", "line")
         .attr("fill", "none")
-        .attr("stroke", (d) => d[0].color)
+        .attr("stroke", d3.schemeCategory10[i])
         .attr("stroke-width", 1.5)
 
         .on("mouseover", function (line, d) {
