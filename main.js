@@ -133,8 +133,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         var name = d.properties.name;
         one_country = d3
           .select(this)
-          .style("stroke", "yellow")
-          .style("stroke-width", 2)
+          .style("stroke", "#428F89")
+          .style("stroke-width", 3)
           .attr("class", "markedone1");
         country_array.push(name);
         d3.select("#hint").style("opacity", 0.0);
@@ -206,8 +206,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         var name = d.properties.name;
         one_country = d3
           .select(this)
-          .style("stroke", "rgb(242,218,87)")
-          .style("stroke-width", 2)
+          .style("stroke", "#428F89")
+          .style("stroke-width", 3)
           .attr("class", "markedone2");
         country_array.push(name);
         d3.select("#hint").style("opacity", 0.0);

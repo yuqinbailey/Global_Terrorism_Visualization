@@ -34,7 +34,8 @@ p {
 }
 
 .countries:hover {
-  stroke: white;
+  stroke: #ab3334;
+  stroke-width: 2.5;
 }
 
 
