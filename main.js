@@ -2,8 +2,8 @@ const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
 
-const expScale = d3.scaleLog().domain([1, 4001]);
-const color = d3.scaleSequential((d) => d3.interpolateReds(expScale(d + 1)));
+const logScale = d3.scaleLog().domain([1, 4001]);
+const color = d3.scaleSequential((d) => d3.interpolateReds(logScale(d + 1)));
 
 var country_array = new Array();
 var year = 2000;
@@ -150,7 +150,40 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       draw_map1(year);
       d3.select("output#slidertext").text(year);
     });
-  }
+
+    // legend
+    const lgHeight = 180;
+    const barWidth = 2;
+
+    var y = d3.scaleLog()
+        .domain([1, 4001])
+        .range([lgHeight, 0]);
+
+    var yLegend = d3.axisRight(y)
+        .tickValues([3, 10, 100, 1000, 2000, 4000])
+        .tickFormat(d3.format(",.1s"))
+        .tickSize(3, 0);
+
+    worldmap.append("g")
+        .attr("class", "yLegend")
+        .attr("transform", "translate(" + (90+20) + "," + (505+barWidth) + ")")
+        .call(yLegend);
+
+    worldmap
+      .append("g")
+      .attr("width", lgHeight)
+      .attr("class", "logScale")
+      .attr("transform", "translate(" + 90 + "," + 505 + ")")
+      .selectAll("bars")
+      .data(d3.range(1, lgHeight, barWidth))
+      .enter()
+      .append("rect")
+      .attr("y", (d, i) => lgHeight - i * barWidth)
+      .attr("x", 0)
+      .attr("width", 20)
+      .attr("height", barWidth)
+      .attr("fill", color);
+  };
 
   // -------------- draw the map with points --------------------------
   function draw_map2(year = 2000) {
@@ -166,7 +199,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .append("path")
       .attr("class", "countries")
       .attr("fill", "rgb(99,95,93)")
-      .attr("stroke", "white")
+      .attr("stroke", "black")
       .attr("d", (d) => pathGenerator(d))
 
       .on("click", function (path, d) {
@@ -207,18 +240,20 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       }
     }
 
-  //The legend 
-    var colorScale = d3.scaleLinear()
-.domain([100,0])
-.range(["rgb(255,100,100)","rgb(255,150,150)"]);
+    //The legend
+    var colorScale = d3
+      .scaleLinear()
+      .domain([100, 0])
+      .range(["rgb(255,100,100)", "rgb(255,150,150)"]);
 
-var legend = d3.legendColor()
-.scale(colorScale);
+    var legend = d3.legendColor().scale(colorScale);
 
-lengg= d3.select("svg.mappp").append("g")
-.attr("id","legend")
-.attr("transform","translate(100,600)")
-.call(legend);
+    lengg = d3
+      .select("svg.mappp")
+      .append("g")
+      .attr("id", "legend")
+      .attr("transform", "translate(90, 580)")
+      .call(legend);
 
     worldmap
       .selectAll(".point")
@@ -371,6 +406,8 @@ lengg= d3.select("svg.mappp").append("g")
 
   btns[0].onclick = function change_view() {
     if (falg) {
+        d3.selectAll(".logScale").remove();
+        d3.selectAll(".yLegend").remove();
       d3.selectAll("#legend").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".countries").remove();

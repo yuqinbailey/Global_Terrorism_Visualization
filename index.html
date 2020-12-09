@@ -3,6 +3,7 @@
     <head>
         <title>Global Terrorism</title>
         <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>        
         <script src="//d3js.org/topojson.v1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
         <script src="https://d3js.org/d3-geo-projection.v3.min.js"></script>
@@ -10,10 +11,10 @@
     </head>
     <body>
         <header>
-            <h1 style="text-align: center;">Global Terrorism from 1970 to 2017</h1>
+            <h1>Global Terrorism from 1970 to 2017</h1>
         </header>
         <svg class="mappp" width="900" height="730"></svg>
-        <svg class="linechart" width="580" height="1000"></svg>
+        <svg class="linechart" width="500" height="1000"></svg>
         <div class="year_slider">
             <p>Year</p>
             <input id='slider' type='range' min='1970' max='2017' value='2000' step='1'>
@@ -21,8 +22,12 @@
         </div>
         <div class = "description">
             <p>
-                Terrorism indeed overshadows every aspect of economic, social, cultural and political life. While it brings instability and disrupts peace and coexistence environments, 
-                it directly endangers the lives of people and brings every type of violence in the society. To appeal for wider attention on such heinous action and contempt for life, 
+                Terrorism indeed overshadows every aspect of economic, social, cultural and political life. 
+                While it brings instability and disrupts peace and coexistence environments, 
+                it directly endangers the lives of people and brings every type of violence in the society. 
+            </p>
+            <p>
+                To appeal for wider attention on such heinous action and contempt for life, 
                 this map help us to see the change thrend of terrorist attacks in different locations.
             </p>
         </div>
