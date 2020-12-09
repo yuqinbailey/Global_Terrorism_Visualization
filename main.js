@@ -82,7 +82,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   data2.forEach((d) => {
     d.year = +d.year;
     d.data = +d.data;
-    d.color = "rgb"+"("+random_color()[0]+","+random_color()[1]+","+random_color()[2]+")"
+    d.color = "rgb("+random_color()[0]+","+random_color()[1]+","+random_color()[2]+")";
   });
 
   console.log(data2);
@@ -322,7 +322,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .datum(data2.filter((d) => country_array[i] == d.country))
         .attr("class", "line")
         .attr("fill", "none")
-        .attr("stroke", (d) => d.color)
+        .attr("stroke", (d) => d[0].color)
         .attr("stroke-width", 1.5)
 
         .on("mouseover", function (line, d) {
