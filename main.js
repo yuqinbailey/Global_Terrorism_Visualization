@@ -23,7 +23,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     .scale(135)
     .center([-11, 0])
     .rotate([0, 0])
-    .translate([width / 2, height / 2 +20]);
+    .translate([width / 2, height / 2 +160]);
   const pathGenerator = d3.geoPath().projection(projection);
   const paths = svg.selectAll("path").data(countries.features);
 
@@ -81,6 +81,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   console.log(data2);
 
   // -------------- draw map with different color ---------------------------
+  
   async function draw_map1(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
@@ -90,7 +91,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("d", pathGenerator({ type: "Sphere" }));
 
     let attack = attack_data[Number(year) - 1970];
-
+    
     var attack_num = function (country_name) {
       if (attack[country_name] === undefined) {
         //console.log(country_name);
@@ -135,7 +136,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
           .select(this)
           .style("stroke", "yellow")
           .style("stroke-width", 2)
-          .attr("class", "markedone");
+          .attr("class", "markedone1");
         country_array.push(name);
         d3.select("#hint").style("opacity", 0.0);
         draw_linechart(country_array);
@@ -166,7 +167,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .append("path")
       .attr("class", "countries")
       .attr("fill", "rgb(99,95,93)")
-      .attr("stroke", "black")
+      .attr("stroke", "white")
       .attr("d", (d) => pathGenerator(d))
 
       .on("click", function (path, d) {
@@ -175,7 +176,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
           .select(this)
           .style("stroke", "rgb(242,218,87)")
           .style("stroke-width", 2)
-          .attr("class", "markedone");
+          .attr("class", "markedone2");
         country_array.push(name);
         d3.select("#hint").style("opacity", 0.0);
         draw_linechart(country_array);
@@ -366,8 +367,10 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     d3.select("#hint").style("opacity", 0.95);
     country_array = [];
     d3.selectAll(".line").remove();
-    marked = d3.selectAll(".markedone").style("stroke-width", 1);
-    marked.style("stroke", "black").attr("class", "countries");
+    marked1 = d3.selectAll(".markedone1").style("stroke-width", 1);
+    marked1.style("stroke", "black").attr("class", "countries");
+    marked2 = d3.selectAll(".markedone2").style("stroke-width", 1);
+    marked2.style("stroke", "white").attr("class", "countries");
   };
   // initialization
 
