@@ -1,3 +1,14 @@
+header {
+	z-index: 1;
+	background-color: white;
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 75px;
+	border-bottom: 3px solid rgb(221, 221, 221);
+}
+
 body {
   margin: 0px;
 }
@@ -6,10 +17,8 @@ body {
   fill: white;
 }
 
-
-)
 .countries:hover {
-  stroke: black;
+  stroke: white;
 }
 
 
@@ -76,10 +85,10 @@ div.tooltip {
 #hint {
   background-color: rgb(239, 236, 234);
   position: absolute;
-  left: 1040px;
-  top: 400px;
+  left: 1035px;
+  top: 420px;
   border: 2px dashed rgb(99, 95, 93);
-  padding: 50px 60px;
+  padding: 40px 40px;
 }
 
 #hint p{

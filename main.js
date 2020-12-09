@@ -1,16 +1,13 @@
 const svg = d3.select("svg");
 const width = +svg.attr("width");
 const height = +svg.attr("height");
-const color = d3
-  .scaleLinear()
-  .domain([0, 4000])
-  .interpolate(() => d3.interpolatePiYG);
+
+const expScale = d3.scaleLog().domain([1, 4001]);
+const color = d3.scaleSequential((d) => d3.interpolateReds(expScale(d + 1)));
 
 var country_array = new Array();
 var year = 2000;
-
-var div_hint = d3.select("#hint")
-      .style("opacity",1.0)
+var div_hint = d3.select("#hint").style("opacity", .95);
 
 const dataPromise = Promise.all([
   d3.json("world_map.json"),
@@ -114,7 +111,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("class", "countries")
       .attr("d", (d) => pathGenerator(d))
       .attr("stroke", "black")
-      .attr("fill", (d) => color(4000 - attack_num(d.properties.name) * 100))
+      .attr("fill", (d) => color(attack_num(d.properties.name)))
       .on("mouseover", function (path, d) {
         var country_name = d.properties.name;
         div.transition().duration(200).style("opacity", 0.95);
@@ -132,12 +129,13 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       })
       .on("click", function (path, d) {
         var name = d.properties.name;
-        one_country = d3.select(this)
-          .style("stroke", "blue")
-          .style("stroke-width", 5)
+        one_country = d3
+          .select(this)
+          .style("stroke", "yellow")
+          .style("stroke-width", 2)
           .attr("class", "markedone");
         country_array.push(name);
-        d3.select("#hint").style("opacity",0.0);
+        d3.select("#hint").style("opacity", 0.0);
         draw_linechart(country_array);
       });
 
@@ -165,22 +163,23 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .enter()
       .append("path")
       .attr("class", "countries")
-      .attr("fill", "white")
+      .attr("fill", "rgb(99,95,93)")
       .attr("stroke", "black")
       .attr("d", (d) => pathGenerator(d))
 
       .on("click", function (path, d) {
         var name = d.properties.name;
-        one_country = d3.select(this)
-          .style("stroke", "blue")
-          .style("stroke-width", 5)
+        one_country = d3
+          .select(this)
+          .style("stroke", "rgb(242,218,87)")
+          .style("stroke-width", 2)
           .attr("class", "markedone");
         country_array.push(name);
-        d3.select("#hint").style("opacity",0.0);
+        d3.select("#hint").style("opacity", 0.0);
         draw_linechart(country_array);
       });
 
-    var div = d3
+    let div = d3
       .select("body")
       .append("div")
       .attr("class", "tooltip")
@@ -214,9 +213,10 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("class", "point")
       .attr("cx", (d) => projection([d.longitude, d.latitude])[0])
       .attr("cy", (d) => projection([d.longitude, d.latitude])[1])
-      .attr("r", 3)
+      .attr("r", 2)
       .attr("fill", (d) => point_color(d.size))
-      //.style("stroke", "black")
+      .style("stroke", (d) => point_color(d.size))
+      .style("opacity", 0.86)
       .on("mouseover", function (point, d) {
         var city_name = d.city;
         var casualty = d.size;
@@ -258,7 +258,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
   var max_y = 100;
 
-  var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]); // TODO
+  var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
   g.append("g").attr("id", "y_axis").call(d3.axisLeft(y));
 
   function draw_linechart(country_array) {
@@ -271,7 +271,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       console.log("i", country_array[i]);
       n = d3.max(
         data2.filter((d) => d.country == country_array[i]),
-        (d) => d.data //changed from .number
+        (d) => d.data
       );
       console.log(n);
       y_scale.push(parseInt(n * 1.2));
@@ -294,8 +294,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("class", "tooltip")
       .style("opacity", 0.0);
 
-    
-      
     for (i in country_array) {
       g.append("path")
         .datum(data2.filter((d) => country_array[i] == d.country))
@@ -303,6 +301,18 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
+
+        .on("mouseover", function (line, d) {
+          console.log(d);
+          div.transition().duration(200).style("opacity", 0.95);
+          div
+            .html(d[0].country)
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY - 28 + "px");
+        })
+        .on("mouseout", function (d) {
+          div.transition().duration(500).style("opacity", 0);
+        })
         .attr(
           "d",
           d3
@@ -313,15 +323,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
             .y(function (d) {
               return y(d.data);
             })
-        )
-        .on("mouseover", function (line, d) {
-          console.log(d[0].country);
-          div.transition().duration(200).style("opacity", 0.95);
-          div.html(d[0].country).style("left", event.pageX + "px");
-        })
-        .on("mouseout", function (d) {
-          div.transition().duration(500).style("opacity", 0);
-        });
+        );
     }
   }
 
@@ -345,7 +347,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   };
 
   btns[1].onclick = function clear_data() {
-    d3.select("#hint").style("opacity",0.95);
+    d3.select("#hint").style("opacity", 0.95);
     country_array = [];
     d3.selectAll(".line").remove();
     marked = d3.selectAll(".markedone").style("stroke-width", 1);
