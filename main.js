@@ -62,6 +62,14 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       return country_name;
     }
   };
+
+  function random_color(){
+    a = parseInt(Math.random()*255);
+    b = parseInt(Math.random()*255);
+    c = parseInt(Math.random()*255);
+    return [a,b,c]
+  }
+
   global.forEach((d) => {
     d.year = +d.iyear;
     d.city = d.city;
@@ -73,9 +81,10 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
   data2.forEach((d) => {
     d.year = +d.year;
-    d.city = d.city;
     d.data = +d.data;
+    d.color = "rgb"+"("+random_color()[0]+","+random_color()[1]+","+random_color()[2]+")"
   });
+
   console.log(data2);
 
   // -------------- draw map with different color ---------------------------
@@ -277,7 +286,9 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       y_scale.push(parseInt(n * 1.2));
     }
 
-    console.log(Math.max(...y_scale));
+    //console.log(Math.max(...y_scale));
+
+    
 
     max_y = Math.max(...y_scale);
 
@@ -287,7 +298,19 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .append("g")
       .call(d3.axisLeft(y))
       .attr("id", "y_axis");
+/*
+    var yInner = d3.axis()
+      .scale(y)
+      .tickSize(-width,0,0)
+      .tickFormat("")
+      .orient("left")
+      .ticks(5);
 
+    var yInnerBar= d3.select("#linechart").append("g")
+      .attr("class", "inner_line")
+      .attr("transform", "translate(0,-25)")
+      .call(yInner);
+*/
     var div = d3
       .select("body")
       .append("div")
@@ -299,7 +322,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .datum(data2.filter((d) => country_array[i] == d.country))
         .attr("class", "line")
         .attr("fill", "none")
-        .attr("stroke", "steelblue")
+        .attr("stroke", (d) => d.color)
         .attr("stroke-width", 1.5)
 
         .on("mouseover", function (line, d) {
