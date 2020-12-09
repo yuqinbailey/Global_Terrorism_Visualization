@@ -37,6 +37,12 @@ div.tooltip {
   pointer-events: none;         
 }
 
+.lineLegend {
+  font-size: 12px;
+  font: sans-serif;
+  text-anchor: start;
+}
+
 
 .mappp{
   background-color: rgb(255, 255, 255);

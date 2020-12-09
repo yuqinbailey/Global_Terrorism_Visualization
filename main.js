@@ -7,7 +7,7 @@ const color = d3.scaleSequential((d) => d3.interpolateReds(expScale(d + 1)));
 
 var country_array = new Array();
 var year = 2000;
-var div_hint = d3.select("#hint").style("opacity", .95);
+var div_hint = d3.select("#hint").style("opacity", 0.95);
 
 const dataPromise = Promise.all([
   d3.json("world_map.json"),
@@ -23,7 +23,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     .scale(135)
     .center([-11, 0])
     .rotate([0, 0])
-    .translate([width / 2, height / 2 +160]);
+    .translate([width / 2, height / 2 + 160]);
   const pathGenerator = d3.geoPath().projection(projection);
   const paths = svg.selectAll("path").data(countries.features);
 
@@ -63,7 +63,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     }
   };
 
-
   global.forEach((d) => {
     d.year = +d.iyear;
     d.city = d.city;
@@ -81,7 +80,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   console.log(data2);
 
   // -------------- draw map with different color ---------------------------
-  
+
   async function draw_map1(year = 2000) {
     let worldmap = d3.select("svg.mappp");
 
@@ -91,7 +90,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("d", pathGenerator({ type: "Sphere" }));
 
     let attack = attack_data[Number(year) - 1970];
-    
+
     var attack_num = function (country_name) {
       if (attack[country_name] === undefined) {
         //console.log(country_name);
@@ -282,8 +281,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
     //console.log(Math.max(...y_scale));
 
-    
-
     max_y = Math.max(...y_scale);
 
     var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
@@ -292,7 +289,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .append("g")
       .call(d3.axisLeft(y))
       .attr("id", "y_axis");
-/*
+    /*
     var yInner = d3.axis()
       .scale(y)
       .tickSize(-width,0,0)
@@ -318,7 +315,6 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .attr("fill", "none")
         .attr("stroke", d3.schemeCategory10[i])
         .attr("stroke-width", 1.5)
-
         .on("mouseover", function (line, d) {
           console.log(d);
           div.transition().duration(200).style("opacity", 0.95);
@@ -341,6 +337,21 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
               return y(d.data);
             })
         );
+
+      // legend
+      g.append("g")
+        .attr("class", "lineLegend")
+        .attr("transform", "translate(" + 25 + "," + i * 15 + ")")
+        .append("text")
+        .text(country_array[i])
+        .attr("fill", "black")
+        .attr("transform", "translate(15,9)"); //align texts with boxes
+      g.append("rect")
+        .attr("class", "legend")
+        .attr("transform", "translate(" + 20 + "," + i * 15 + ")")
+        .attr("fill", d3.schemeCategory10[i])
+        .attr("width", 10)
+        .attr("height", 10);
     }
   }
 
@@ -367,6 +378,8 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     d3.select("#hint").style("opacity", 0.95);
     country_array = [];
     d3.selectAll(".line").remove();
+    d3.selectAll(".legend").remove();
+    d3.selectAll(".lineLegend").remove();
     marked1 = d3.selectAll(".markedone1").style("stroke-width", 1);
     marked1.style("stroke", "black").attr("class", "countries");
     marked2 = d3.selectAll(".markedone2").style("stroke-width", 1);
