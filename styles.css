@@ -15,7 +15,8 @@ header h1 {
   padding-top: 20px;
   font-size: 50px;
   font-weight: bold;
-	color: #AB3334;
+  color: #AB3334;
+  text-shadow: -1px -1px rgb(239, 236, 234), 1px 1px #331919;
 	margin: 0px;
 	text-align: center;
 }
