@@ -325,10 +325,10 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
   var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
   g.append("g").attr("id", "y_axis").call(d3.axisLeft(y))
-  .selectAll("text")
-  .attr("class","attack_text");
+  .selectAll("text");
 
   g.append("text")
+  .attr("class","attack_text")
             .attr("text-anchor","end")
             .attr("x",40)
             .attr("y",-10)
@@ -450,7 +450,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     marked1 = d3.selectAll(".markedone1").style("stroke-width", 1);
     marked1.style("stroke", "black").attr("class", "countries");
     marked2 = d3.selectAll(".markedone2").style("stroke-width", 1);
-    marked2.style("stroke", "white").attr("class", "countries");
+    marked2.style("stroke", "black").attr("class", "countries");
   };
   // initialization
 
