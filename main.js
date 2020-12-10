@@ -155,25 +155,35 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
     const lgHeight = 180;
     const barWidth = 2;
 
-    var y = d3.scaleLog()
-        .domain([1, 4001])
-        .range([lgHeight, 0]);
+    var y = d3.scaleLog().domain([1, 4001]).range([lgHeight, 0]);
 
-    var yLegend = d3.axisRight(y)
-        .tickValues([3, 10, 100, 1000, 2000, 4000])
-        .tickFormat(d3.format(",.1s"))
-        .tickSize(3, 0);
+    var yLegend = d3
+      .axisRight(y)
+      .tickValues([3, 10, 100, 1000, 2000, 4000])
+      .tickFormat(d3.format(",.1s"))
+      .tickSize(3, 0);
 
-    worldmap.append("g")
-        .attr("class", "yLegend")
-        .attr("transform", "translate(" + (90+20) + "," + (505+barWidth) + ")")
-        .call(yLegend);
+    worldmap
+      .append("g")
+      .attr("class", "yLegend")
+      .attr(
+        "transform",
+        "translate(" + (90 + 20) + "," + (515 + barWidth) + ")"
+      )
+      .call(yLegend);
+
+    worldmap
+      .append("text")
+      .attr("class", "anotation")
+      .attr("text-anchor", "start")
+      .attr("transform", "translate(" + 88 + "," + 506 + ")")
+      .text("Attack Amount");
 
     worldmap
       .append("g")
       .attr("width", lgHeight)
       .attr("class", "logScale")
-      .attr("transform", "translate(" + 90 + "," + 505 + ")")
+      .attr("transform", "translate(" + 90 + "," + 515 + ")")
       .selectAll("bars")
       .data(d3.range(1, lgHeight, barWidth))
       .enter()
@@ -183,7 +193,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("width", 20)
       .attr("height", barWidth)
       .attr("fill", color);
-  };
+  }
 
   // -------------- draw the map with points --------------------------
   function draw_map2(year = 2000) {
@@ -254,6 +264,13 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("id", "legend")
       .attr("transform", "translate(90, 580)")
       .call(legend);
+
+    worldmap
+      .append("text")
+      .attr("class", "anotation")
+      .attr("text-anchor", "start")
+      .attr("transform", "translate(" + 88 + "," + 568 + ")")
+      .text("Causality");
 
     worldmap
       .selectAll(".point")
@@ -335,19 +352,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .append("g")
       .call(d3.axisLeft(y))
       .attr("id", "y_axis");
-    /*
-    var yInner = d3.axis()
-      .scale(y)
-      .tickSize(-width,0,0)
-      .tickFormat("")
-      .orient("left")
-      .ticks(5);
 
-    var yInnerBar= d3.select("#linechart").append("g")
-      .attr("class", "inner_line")
-      .attr("transform", "translate(0,-25)")
-      .call(yInner);
-*/
     var div = d3
       .select("body")
       .append("div")
@@ -406,8 +411,9 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
 
   btns[0].onclick = function change_view() {
     if (falg) {
-        d3.selectAll(".logScale").remove();
-        d3.selectAll(".yLegend").remove();
+      d3.selectAll(".logScale").remove();
+      d3.selectAll(".yLegend").remove();
+      d3.selectAll(".anotation").remove();
       d3.selectAll("#legend").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".countries").remove();
@@ -416,6 +422,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       falg = false;
     } else {
       d3.selectAll("#legend").remove();
+      d3.selectAll(".anotation").remove();
       d3.selectAll(".countries").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".point").remove();

@@ -34,8 +34,8 @@ p {
 }
 
 .countries:hover {
-  stroke: #ab3334;
   stroke-width: 2.5;
+  stroke: #ab3334;
 }
 
 
@@ -82,6 +82,18 @@ div.tooltip {
   padding-right: 23px;
   left: 950px;
   top: 150px;
+}
+
+.anotation {
+  font-family: serif;
+  text-anchor: start;
+  font: 14px serif;
+}
+
+.attack_text {
+  font-family: serif;
+  text-anchor: end;
+  font: 14px serif;
 }
 
 #btn1 {
