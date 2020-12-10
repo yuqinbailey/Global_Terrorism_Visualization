@@ -270,7 +270,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       .attr("class", "anotation")
       .attr("text-anchor", "start")
       .attr("transform", "translate(" + 88 + "," + 568 + ")")
-      .text("Causality");
+      .text("Casualty");
 
     worldmap
       .selectAll(".point")
@@ -324,29 +324,27 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   var max_y = 100;
 
   var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
-  g.append("g").attr("id", "y_axis").call(d3.axisLeft(y))
-  .selectAll("text");
+  g.append("g").attr("id", "y_axis").call(d3.axisLeft(y)).selectAll("text");
 
   g.append("text")
-  .attr("class","attack_text")
-            .attr("text-anchor","end")
-            .attr("x",40)
-            .attr("y",-10)
-            .text("Attack Amount");
+    .attr("class", "attack_text")
+    .attr("text-anchor", "end")
+    .attr("x", 40)
+    .attr("y", -10)
+    .text("Attack Amount");
 
   function draw_linechart(country_array) {
     d3.select("#y_axis").remove();
 
-    console.log(country_array);
+    //console.log(country_array);
     var y_scale = [];
     for (i in country_array) {
-      console.log(country_array);
-      console.log("i", country_array[i]);
+      //console.log(country_array);
       n = d3.max(
         data2.filter((d) => d.country == country_array[i]),
         (d) => d.data
       );
-      console.log(n);
+      //console.log(n);
       y_scale.push(parseInt(n * 1.2));
     }
 
@@ -375,7 +373,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
         .attr("stroke", d3.schemeCategory10[i])
         .attr("stroke-width", 1.5)
         .on("mouseover", function (line, d) {
-          console.log(d);
+          //console.log(d);
           div.transition().duration(200).style("opacity", 0.95);
           div
             .html(d[0].country)
@@ -425,7 +423,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       d3.selectAll("#legend").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".countries").remove();
-      var year = document.getElementById('slider').value;
+      var year = document.getElementById("slider").value;
       draw_map2(year);
       console.log("Change from map1 to map 2");
       falg = false;
@@ -435,7 +433,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       d3.selectAll(".countries").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".point").remove();
-      var year = document.getElementById('slider').value;
+      var year = document.getElementById("slider").value;
       draw_map1(year);
       falg = true;
     }
