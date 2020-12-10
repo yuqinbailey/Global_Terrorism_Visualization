@@ -425,6 +425,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       d3.selectAll("#legend").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".countries").remove();
+      var year = document.getElementById('slider').value;
       draw_map2(year);
       console.log("Change from map1 to map 2");
       falg = false;
@@ -434,9 +435,9 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       d3.selectAll(".countries").remove();
       d3.selectAll(".sphere").remove();
       d3.selectAll(".point").remove();
+      var year = document.getElementById('slider').value;
       draw_map1(year);
       falg = true;
-    }
   };
 
   btns[1].onclick = function clear_data() {
