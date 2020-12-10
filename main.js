@@ -438,6 +438,7 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
       var year = document.getElementById('slider').value;
       draw_map1(year);
       falg = true;
+    }
   };
 
   btns[1].onclick = function clear_data() {
