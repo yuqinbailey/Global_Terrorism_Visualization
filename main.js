@@ -324,7 +324,15 @@ dataPromise.then(([map_data, attack_data, global, data2]) => {
   var max_y = 100;
 
   var y = d3.scaleLinear().domain([0, max_y]).range([300, 0]);
-  g.append("g").attr("id", "y_axis").call(d3.axisLeft(y));
+  g.append("g").attr("id", "y_axis").call(d3.axisLeft(y))
+  .selectAll("text")
+  .attr("class","attack_text");
+
+  g.append("text")
+            .attr("text-anchor","end")
+            .attr("x",40)
+            .attr("y",-10)
+            .text("Attack Amount");
 
   function draw_linechart(country_array) {
     d3.select("#y_axis").remove();
